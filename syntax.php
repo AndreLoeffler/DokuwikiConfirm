@@ -36,6 +36,8 @@ class syntax_plugin_confirm extends DokuWiki_Syntax_Plugin {
             @list($coauth, $status) = explode('|',$match,2);
 			//get the name of coauthor
             
+            global $ID;
+            
 			$stylePending = "background-color: red;";
 			$styleConfirm = "background-color: green;";
 			$styleClient = "background-color: yellow;";
@@ -46,39 +48,40 @@ class syntax_plugin_confirm extends DokuWiki_Syntax_Plugin {
 			//define default variables
 			$style = "border: 1px solid black; width: 400px; height: 30px; ";
 			$button = "";
-
+			$script = "";
+			
 			if ($status == "c") {
 				$style .= $styleConfirm;			
 			} else {
 				$style .= $stylePending;
-				$coauth .= " INFO: ".$_SERVER['REMOTE_USER']." blabla";
 				if ($info['client'] == $coauth) {
 					$button .= "<button style='float: right;' onclick='confirm()'>bestätigen</button>";
+					$script .= "<script type='text/javascript'>".
+                							"function confirm() {".
+                								"alert('".$ID."');".
+                							"}".
+                						"</script>";
 				}
 			}
 			
 			
 			
             //builds and fills the data-array
-            return array('wiki', hsc(trim($coauth)), hsc(trim($style)), trim($button));
+            return array('wiki', hsc(trim($coauth)), hsc(trim($style)), trim($button), trim($script));
         } else {
             return array('error', $this->getLang("gcal_Bad_iFrame"));  // this is an error
         } // matched {{conf>...
     }
 
     function render($mode, &$renderer, $data) {
-        list($style, $coauth, $format, $button) = $data;
+        list($style, $coauth, $format, $button, $script) = $data;
         
         if($mode == 'xhtml'){
             // Two styles: wiki and error
             switch($style) {
                 case 'wiki':
                 	$renderer->doc .= "<div style='".$format."'>".$coauth.$button."</div>".
-                						"<script type='text/javascript'>".
-                							"function confirm() {".
-                								"alert('test');".
-                							"}".
-                						"</script>";
+                						$script;
                     break;
                 case 'error':
                     $renderer->doc .= "<div class='error'>$url</div>";

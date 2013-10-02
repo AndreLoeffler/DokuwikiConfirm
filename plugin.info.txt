@@ -1,0 +1,7 @@
+base   confirm
+author Andre Löffler
+email  confirm@andre-loeffler.net
+date   2013-02-10
+name   Coauthor confirmation plugin
+desc   Adds a Coauthor, who can confirm the page
+url    http://dokuwiki.org/plugin:google_cal

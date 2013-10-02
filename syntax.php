@@ -40,34 +40,38 @@ class syntax_plugin_confirm extends DokuWiki_Syntax_Plugin {
 			$styleConfirm = "background-color: green;";
 			$styleClient = "background-color: yellow;";
 			
+			//define default variables
 			$style = "border: 1px solid black; width: 400px; height: 30px; ";
+			$button = "";
+
 			if ($status == "c") {
 				$style .= $styleConfirm;			
 			} else {
 				$style .= $stylePending;
+				if ($info['client'] == $coauth) {
+					$button .= "<button style='float: right;' onclick='confirm()'>bestätigen</button>";
+				}
 			}
 			
+			//make pageinfo available
 			$info = pageinfo();
 			
-			if ($info['client'] == $coauth) {
-				$style .= $styleClient;
-			}
 			
             //builds and fills the data-array
-            return array('wiki', hsc(trim($coauth)), hsc(trim($style)));
+            return array('wiki', hsc(trim($coauth)), hsc(trim($style)), hsc(trim($button)));
         } else {
             return array('error', $this->getLang("gcal_Bad_iFrame"));  // this is an error
         } // matched {{conf>...
     }
 
     function render($mode, &$renderer, $data) {
-        list($style, $coauth, $format) = $data;
+        list($style, $coauth, $format, $button) = $data;
         
         if($mode == 'xhtml'){
             // Two styles: wiki and error
             switch($style) {
                 case 'wiki':
-                	$renderer->doc .= "<div style='".$format."'>".$coauth."<button style='float: right;' onclick='confirm()'>bestätigen</button></div>".
+                	$renderer->doc .= "<div style='".$format."'>".$coauth.$button."</div>".
                 						"<script type='text/javascript'>".
                 							"function confirm() {".
                 								"alert('test');".

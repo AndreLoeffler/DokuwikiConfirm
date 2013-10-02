@@ -51,7 +51,7 @@ class syntax_plugin_confirm extends DokuWiki_Syntax_Plugin {
 				$style .= $styleConfirm;			
 			} else {
 				$style .= $stylePending;
-				$coauth .= " INFO: ".$info['userinfo']['user'];
+				$coauth .= " INFO: ".$info['userinfo']['name'];
 				if ($info['client'] == $coauth) {
 					$button .= "<button style='float: right;' onclick='confirm()'>bestätigen</button>";
 				}

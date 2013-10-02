@@ -38,12 +38,17 @@ class syntax_plugin_confirm extends DokuWiki_Syntax_Plugin {
             
 			$stylePending = "background-color: red;";
 			$styleConfirm = "background-color: green;";
-
+			$styleClient = "background-color: yellow;";
+			
 			$style = "border: 1px solid black; width: 400px; height: 30px; ";
 			if ($status == "c") {
 				$style .= $styleConfirm;			
 			} else {
 				$style .= $stylePending;
+			}
+			
+			if ($INFO['client'] == $coauth) {
+				$style .= $styleClient;
 			}
 			
             //builds and fills the data-array

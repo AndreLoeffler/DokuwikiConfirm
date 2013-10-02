@@ -40,6 +40,9 @@ class syntax_plugin_confirm extends DokuWiki_Syntax_Plugin {
 			$styleConfirm = "background-color: green;";
 			$styleClient = "background-color: yellow;";
 			
+			//make pageinfo available
+			$info = pageinfo();
+
 			//define default variables
 			$style = "border: 1px solid black; width: 400px; height: 30px; ";
 			$button = "";
@@ -53,8 +56,6 @@ class syntax_plugin_confirm extends DokuWiki_Syntax_Plugin {
 				}
 			}
 			
-			//make pageinfo available
-			$info = pageinfo();
 			
 			
             //builds and fills the data-array

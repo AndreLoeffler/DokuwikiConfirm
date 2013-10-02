@@ -32,24 +32,35 @@ class syntax_plugin_confirm extends DokuWiki_Syntax_Plugin {
             // Handle the simplified style of calendar tag
             $match = html_entity_decode(substr($match, 7, -2));
             
+            //separate coauthor and confirmation status
+            @list($coauth, $status) = explode('|',$match,2);
 			//get the name of coauthor
-			$coauth = $match;
             
+			$stylePending = "background-color: red;";
+			$styleConfirm = "background-color: green;";
+
+			$style;
+			if ($status == "c") {
+				$style = $styleConfirm;			
+			} else {
+				$style = $stylePending;
+			}
+			
             //builds and fills the data-array
-            return array('wiki', hsc(trim($coauth)));
+            return array('wiki', hsc(trim($coauth)), hsc(trim($style)));
         } else {
             return array('error', $this->getLang("gcal_Bad_iFrame"));  // this is an error
         } // matched {{conf>...
     }
 
     function render($mode, &$renderer, $data) {
-        list($style, $coauth) = $data;
+        list($style, $coauth, $style) = $data;
         
         if($mode == 'xhtml'){
             // Two styles: wiki and error
             switch($style) {
                 case 'wiki':
-                	$renderer->doc .= "<div>".$coauth."</div>";
+                	$renderer->doc .= "<div style='".$style."'>".$coauth."</div>";
                     break;
                 case 'error':
                     $renderer->doc .= "<div class='error'>$url</div>";

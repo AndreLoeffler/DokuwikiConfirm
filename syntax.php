@@ -30,53 +30,26 @@ class syntax_plugin_confirm extends DokuWiki_Syntax_Plugin {
     function handle($match, $state, $pos, &$handler){        
         if(preg_match('/{{conf>(.*)/', $match)) {             // Hook for future features
             // Handle the simplified style of calendar tag
-            $match = html_entity_decode(substr($match, 6, -2));
+            $match = html_entity_decode(substr($match, 7, -3));
             
-            // Split on pipes, $disp is new and optional
-            @list($url, $alt, $disp) = explode('|',$match,3);
-            $matches = array();
-            
-            // '/^\s*([^\[|]+)(?:\[(?:([^,\]]*),)?([^,\]]*)\])?(?:\s*(?:\|\s*(.*))?)?$/mD'
-            if (preg_match('/(.*)\[(.*)\]$/', trim($url), $matches)) {
-                $url = $matches[1];
-                if (strpos($matches[2],',') !== false) {
-                    @list($w, $h) = explode(',',$matches[2],2);
-                } else {
-                    $h = $matches[2];
-                    $w = '100%';
-                }
-            } else {
-                $w = '100%';
-                $h = '600';
-            }
-            
-            // Only parameter for $disp right now is "a" for Agenda
-            if ($disp == 'a') $disp = 'showTitle=0&showPrint=0&showTabs=0&showCalendars=0&showTz=0&mode=AGENDA&wkst=1&bgcolor=%23FFFFFF&';
-            if (!isset($disp)) $disp = '';
-            
-            if (!isset($alt)) $alt = '';
-            
-            if (!$this->getConf('js_ok') && substr($url,0,11) == 'javascript:') {
-                return array('error', $this->getLang('gcal_No_JS'));
-            }
+			//get the name of coauthor
+			$coauth = $match;
             
             //builds and fills the data-array
-            return array('wiki', hsc(trim("$url")), hsc(trim($alt)), hsc(trim($disp)), hsc(trim($w)), hsc(trim($h)));
+            return array('wiki', hsc(trim($coauth)));
         } else {
             return array('error', $this->getLang("gcal_Bad_iFrame"));  // this is an error
-        } // matched {{cal>...
+        } // matched {{conf>...
     }
 
     function render($mode, &$renderer, $data) {
-        list($style, $url, $alt, $disp, $w, $h) = $data;
+        list($style, $coauth) = $data;
         
         if($mode == 'xhtml'){
             // Two styles: wiki and error
             switch($style) {
                 case 'wiki':
-                    $renderer->doc .= "<iframe style='display:none;' id='calframe' src='http://www.google.com/calendar/embed?".$disp."src=$url&amp;height=$h&amp;title=$alt' title='$alt'  width='$w' height='$h' frameborder='0'></iframe>\n".
-				      "<script type='text/javascript'> jQuery(document).ready(function() { jQuery('#calframe').show(); }); </script>".
-				      "<noscript><iframe src='http://www.google.com/calendar/htmlembed?".$disp."src=$url&amp;height=$h&amp;title=$alt' title='$alt'  width='$w' height='$h' frameborder='0'></iframe></noscript>\n";
+                	$renderer->doc .= "<div>".$coauth."</div>";
                     break;
                 case 'error':
                     $renderer->doc .= "<div class='error'>$url</div>";

@@ -30,7 +30,7 @@ class syntax_plugin_confirm extends DokuWiki_Syntax_Plugin {
     function handle($match, $state, $pos, &$handler){        
         if(preg_match('/{{conf>(.*)/', $match)) {             // Hook for future features
             // Handle the simplified style of calendar tag
-            $match = html_entity_decode(substr($match, 7, -3));
+            $match = html_entity_decode(substr($match, 7, -2));
             
 			//get the name of coauthor
 			$coauth = $match;

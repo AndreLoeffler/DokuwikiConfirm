@@ -54,13 +54,13 @@ class syntax_plugin_confirm extends DokuWiki_Syntax_Plugin {
     }
 
     function render($mode, &$renderer, $data) {
-        list($style, $coauth, $style) = $data;
+        list($style, $coauth, $format) = $data;
         
         if($mode == 'xhtml'){
             // Two styles: wiki and error
             switch($style) {
                 case 'wiki':
-                	$renderer->doc .= "<div style='".$style."'>".$coauth."</div>";
+                	$renderer->doc .= "<div style='".$format."'>".$coauth."</div>";
                     break;
                 case 'error':
                     $renderer->doc .= "<div class='error'>$url</div>";

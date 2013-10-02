@@ -39,11 +39,11 @@ class syntax_plugin_confirm extends DokuWiki_Syntax_Plugin {
 			$stylePending = "background-color: red;";
 			$styleConfirm = "background-color: green;";
 
-			$style;
+			$style = "border: 1px solid black; width: 400px; height: 30px; ";
 			if ($status == "c") {
-				$style = $styleConfirm;			
+				$style .= $styleConfirm;			
 			} else {
-				$style = $stylePending;
+				$style .= $stylePending;
 			}
 			
             //builds and fills the data-array
@@ -60,7 +60,7 @@ class syntax_plugin_confirm extends DokuWiki_Syntax_Plugin {
             // Two styles: wiki and error
             switch($style) {
                 case 'wiki':
-                	$renderer->doc .= "<div style='".$format."'>".$coauth."</div>";
+                	$renderer->doc .= "<div style='".$format."'>".$coauth."<button onclick=''>bestätigen</button></div>";
                     break;
                 case 'error':
                     $renderer->doc .= "<div class='error'>$url</div>";

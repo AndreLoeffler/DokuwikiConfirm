@@ -60,7 +60,12 @@ class syntax_plugin_confirm extends DokuWiki_Syntax_Plugin {
             // Two styles: wiki and error
             switch($style) {
                 case 'wiki':
-                	$renderer->doc .= "<div style='".$format."'>".$coauth."<button onclick=''>bestätigen</button></div>";
+                	$renderer->doc .= "<div style='".$format."'>".$coauth."<button style='float: right;' onclick='confirm()'>bestätigen</button></div>".
+                						"<script type='text/javascript'>".
+                							"function confirm() {".
+                								"alert('test');".
+                							"}".
+                						"</script>";
                     break;
                 case 'error':
                     $renderer->doc .= "<div class='error'>$url</div>";

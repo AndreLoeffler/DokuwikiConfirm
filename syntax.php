@@ -47,6 +47,8 @@ class syntax_plugin_confirm extends DokuWiki_Syntax_Plugin {
 				$style .= $stylePending;
 			}
 			
+			$info = pageinfo();
+			
 			if ($info['client'] == $coauth) {
 				$style .= $styleClient;
 			}

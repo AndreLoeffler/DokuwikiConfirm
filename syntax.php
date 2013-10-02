@@ -59,7 +59,7 @@ class syntax_plugin_confirm extends DokuWiki_Syntax_Plugin {
 			
 			
             //builds and fills the data-array
-            return array('wiki', hsc(trim($coauth)), hsc(trim($style)), hsc(trim($button)));
+            return array('wiki', hsc(trim($coauth)), hsc(trim($style)), trim($button));
         } else {
             return array('error', $this->getLang("gcal_Bad_iFrame"));  // this is an error
         } // matched {{conf>...

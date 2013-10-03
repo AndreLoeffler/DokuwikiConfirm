@@ -32,6 +32,8 @@ class syntax_plugin_confirm extends DokuWiki_Syntax_Plugin {
             // Handle the simplified style of calendar tag
             $match = html_entity_decode(substr($match, 7, -2));
             
+
+            
             //separate coauthor and confirmation status
             @list($coauth, $status) = explode('|',$match,2);
 			//get the name of coauthor
@@ -55,16 +57,13 @@ class syntax_plugin_confirm extends DokuWiki_Syntax_Plugin {
 			} else {
 				$style .= $stylePending;
 				if ($info['client'] == $coauth) {
-					$button .= "<button style='float: right;' onclick='confirm()'>bestätigen</button>";
-					$script .= "<script type='text/javascript'>".
-                							"function confirm() {".
-                								"alert('".$ID."');".
-                							"}".
-                						"</script>";
+					$button .= "<form action='lib/plugins/confirm/confirm.php' method='POST'>".
+									"<button style='float: right;'>bestätigen</button>".
+									"<input type='hidden' name='ID' value='".$ID."'>".
+									"<input type='hidden' name='coauth' value='".$coauth."'>".
+								"</form>";
 				}
 			}
-			
-			
 			
             //builds and fills the data-array
             return array('wiki', hsc(trim($coauth)), hsc(trim($style)), trim($button), trim($script));

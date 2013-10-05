@@ -35,3 +35,6 @@
 	//write replacement at position
 	fputs($f, $repl);
 	
+	header("Location: /doku.php?id=".$ID );
+	die();
+	

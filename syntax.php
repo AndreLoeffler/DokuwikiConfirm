@@ -61,6 +61,7 @@ class syntax_plugin_confirm extends DokuWiki_Syntax_Plugin {
 									"<button style='float: right;'>bestätigen</button>".
 									"<input type='hidden' name='ID' value='".$ID."'>".
 									"<input type='hidden' name='coauth' value='".$coauth."'>".
+									"<input type='hidden' name='inc' value='".DOKU_INC."'>".
 								"</form>";
 				}
 			}

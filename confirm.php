@@ -5,7 +5,13 @@
 	$inc = $_POST['inc'];
 	
 	//read source-file
-	$f = fopen($inc.'data/pages/'.$ID.'.txt', 'r+');
+	
+	if(strpos($ID, ':') !== false) {
+		@list($name, $page) = explode(':',$ID,2);
+		$f = fopen($inc.'data/pages/'.$name.'/'.$page.'.txt', 'r+');
+	} else {
+		$f = fopen($inc.'data/pages/'.$ID.'.txt', 'r+');
+	}
 	
 	//container array for matched patterns
 	$matches = array();

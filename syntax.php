@@ -38,8 +38,6 @@ class syntax_plugin_confirm extends DokuWiki_Syntax_Plugin {
             @list($coauth, $status) = explode('|',$match,2);
 			//get the name of coauthor
             
-            global $ID;
-            
 			$stylePending = "background-color: red;";
 			$styleConfirm = "background-color: green;";
 			$styleClient = "background-color: yellow;";
@@ -59,7 +57,7 @@ class syntax_plugin_confirm extends DokuWiki_Syntax_Plugin {
 				if ($info['client'] == $coauth) {
 					$button .= "<form action='lib/plugins/confirm/confirm.php' method='POST'>".
 									"<button style='float: right;'>bestätigen</button>".
-									"<input type='hidden' name='ID' value='".$ID."'>".
+									"<input type='hidden' name='ID' value='".$info['id']."'>".
 									"<input type='hidden' name='coauth' value='".$coauth."'>".
 									"<input type='hidden' name='inc' value='".DOKU_INC."'>".
 								"</form>";
